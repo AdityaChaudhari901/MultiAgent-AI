@@ -1,0 +1,50 @@
+import os
+import pickle
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+from googleapiclient.discovery import build
+
+# SCOPES your app needs
+SCOPES = [
+    "https://www.googleapis.com/auth/calendar",
+    "https://www.googleapis.com/auth/calendar.events",
+    "https://www.googleapis.com/auth/gmail.send"
+]
+
+
+def get_credentials():
+    """Load saved credentials or authenticate the user."""
+    creds = None
+
+    # token.pickle stores the user's access/refresh tokens
+    if os.path.exists("token.pickle"):
+        with open("token.pickle", "rb") as token:
+            creds = pickle.load(token)
+
+    # If no valid credentials available, let user log in
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                "credentials.json", SCOPES
+            )
+            creds = flow.run_local_server(port=0)
+
+        # Save credentials for next time
+        with open("token.pickle", "wb") as token:
+            pickle.dump(creds, token)
+
+    return creds
+
+
+def get_calendar_service():
+    """Return authenticated Google Calendar API service."""
+    creds = get_credentials()
+    return build("calendar", "v3", credentials=creds)
+
+
+def get_gmail_service():
+    """Return authenticated Gmail API service."""
+    creds = get_credentials()
+    return build("gmail", "v1", credentials=creds)

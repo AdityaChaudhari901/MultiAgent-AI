@@ -1,0 +1,14 @@
+# API Framework
+fastapi
+uvicorn[standard]
+
+# Google APIs
+google-api-python-client
+google-auth
+google-auth-oauthlib
+
+# AI/LLM
+google-generativeai
+
+# Environment
+python-dotenv
