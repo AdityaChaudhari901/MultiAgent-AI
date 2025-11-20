@@ -158,16 +158,9 @@ Available templates:
 - Axios
 - CSS3
 
-## 📝 License
-
+#📝 License
 MIT License
 
-## 👤 Author
-
+#Author
 Aditya Chaudhari
 
-## 🙏 Acknowledgments
-
-- Google Gemini AI for natural language processing
-- Google Calendar & Gmail APIs for integration
-- FastAPI for the backend framework
